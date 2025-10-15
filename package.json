@@ -2,7 +2,9 @@
   "name": "remix3",
   "type": "module",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "dev": "vite"
+  },
   "devDependencies": {
     "@biomejs/biome": "2.2.6",
     "typescript": "5.9.3",

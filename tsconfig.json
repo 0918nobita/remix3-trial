@@ -5,6 +5,7 @@
     "module": "Preserve",
     "moduleDetection": "force",
     "jsx": "react-jsx",
+    "jsxImportSource": "@remix-run/dom",
     "allowJs": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
