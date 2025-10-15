@@ -1,0 +1,15 @@
+{
+  "name": "remix3",
+  "type": "module",
+  "private": true,
+  "scripts": {},
+  "devDependencies": {
+    "@biomejs/biome": "2.2.6",
+    "typescript": "5.9.3",
+    "vite": "7.1.10"
+  },
+  "dependencies": {
+    "@remix-run/dom": "0.0.0-experimental-remix-jam.6",
+    "@remix-run/events": "0.0.0-experimental-remix-jam.5"
+  }
+}
