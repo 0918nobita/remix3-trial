@@ -1,27 +1,58 @@
 import { connect, disconnect, type Remix } from '@remix-run/dom';
-import { press } from '@remix-run/events/press';
 
-import { App } from './app';
+import { Button } from './button';
+
+export class PopupContext extends EventTarget {
+  openPopup() {
+    this.dispatchEvent(new Event('popup-open'));
+  }
+}
+
+export function PopupProvider(this: Remix.Handle<PopupContext>) {
+  this.context.set(new PopupContext());
+
+  return ({ children }: { children: Remix.RemixNode }) => children;
+}
 
 export function Popup(this: Remix.Handle) {
-  const appContext = this.context.get(App);
+  const context = this.context.get(PopupProvider);
+
+  let popupEl: HTMLDivElement | null = null;
+
+  const handlePopupOpen = () => {
+    popupEl?.showPopover();
+  };
+
+  context.addEventListener('popup-open', handlePopupOpen);
 
   return () => (
-    <dialog
-      open
+    <div
+      id="popup"
+      popover="manual"
+      css={{
+        '&:popover-open': {
+          position: 'absolute',
+          top: 0,
+          display: 'flex',
+          gap: '8px',
+          background: '#ddd',
+          padding: '8px 10px',
+          border: 'none',
+        },
+      }}
       on={[
-        connect(() => {
-          console.log('connect');
+        connect((event) => {
+          popupEl = event.currentTarget;
         }),
         disconnect(() => {
-          console.log('disconnect');
+          context.removeEventListener('popup-open', handlePopupOpen);
         }),
       ]}
     >
       ポップアップ
-      <button type="button" on={press(() => appContext.closePopup())}>
+      <Button type="button" popovertarget="popup" popovertargetaction="hide">
         閉じる
-      </button>
-    </dialog>
+      </Button>
+    </div>
   );
 }
